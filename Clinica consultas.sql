@@ -22,3 +22,52 @@ CREATE TABLE Citas (
     estado           VARCHAR(20) NOT NULL DEFAULT 'pendiente'
                      CHECK (estado IN ('pendiente', 'completada', 'cancelada'))
 );
+
+-- LEFT JOIN 
+
+SELECT 
+    p.nombre AS nombre_paciente, 
+    p.num_documento,
+    c.fecha_hora, 
+    c.estado
+FROM Pacientes p
+LEFT JOIN Citas c ON p.id_paciente = c.id_paciente;
+
+-- RIGHT JOIN
+
+SELECT 
+    c.fecha_hora, 
+    c.motivo, 
+    m.nombre AS nombre_medico, 
+    m.especialidad
+FROM Citas c
+RIGHT JOIN Medicos m ON c.id_medico = m.id_medico;
+
+-- GROUP BY
+
+SELECT 
+    estado, 
+    COUNT(id_cita) AS total_de_citas
+FROM Citas
+GROUP BY estado;
+
+
+-- LIMIT 
+
+SELECT 
+    id_paciente, 
+    nombre, 
+    num_documento 
+FROM Pacientes
+ORDER BY id_paciente DESC
+LIMIT 5;
+
+-- OFSET
+
+SELECT 
+    id_paciente, 
+    nombre, 
+    num_documento 
+FROM Pacientes
+ORDER BY id_paciente DESC
+LIMIT 5 OFFSET 5;
